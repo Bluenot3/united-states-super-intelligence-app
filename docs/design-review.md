@@ -15,11 +15,11 @@ The working preview follows the generated Observatory primary screen, Impact obs
 - The actual local ZEN mark replaces the conceptual three-bar mark.
 - Copy identifies ZEN's ecosystem and the real program/runtime destinations rather than invented geographic or institutional claims.
 - The supplied data is synthetic. Modeled labels are carried through readings, chart captions, methodology, and exports.
-- Cohort curves plot the three exact modeled cohort totals. No monthly points or intermediate outcomes are invented.
+- The overview plots the three exact modeled cohort totals. The expanded impact chronicle reconstructs exact daily modeled enrollment from the source's enrollment-day offsets; it invents no intermediate outcomes.
 - Stage, assessment, and timing values come from the source records rather than numbers suggested by the image generator.
 - The year selector seals 2027; it does not unlock automatically from a date.
 - Theme cards have a separate multi-selection shortlist in addition to preview selection.
-- Advanced parallel coordinates, clustering, individual synthetic journeys, and other original exploratory tools remain available in the preserved full reference explorer.
+- USSI now includes exact enrollment chronology, four record layouts, interactive parallel coordinates and five analytical atlas views. Additional source tools, including clustering and individual synthetic journeys, remain available in the preserved full reference explorer.
 
 ## Fidelity comparison checklist
 
@@ -48,3 +48,7 @@ All three generated concepts and the integrated browser captures were visually i
 - The production preview at `http://127.0.0.1:4173/` loads the dataset and final visual assets with no captured console errors or page errors. Seven curated production captures are saved in `docs/previews/`.
 
 These are local Chromium and static-build checks. They do not verify hosted USSI delivery, DNS, authenticated Arsenal workflows, real program outcomes or the future admin connector.
+
+## Expanded impact review
+
+The impact route now adds exact enrollment replay and three timeline views, four full-record layouts, eight-measure brushed strands and five analytical atlas views. The original analytical ledger and all nine visual themes remain. Twenty additional desktop/phone captures and the final production-browser regression are documented in [impact visualization design](impact-visualization-design.md). The final review corrected flow-label crowding, score-axis/legend collisions, sparse-filter replay restart, quiet-gap trace endpoints and touch-target sizes.

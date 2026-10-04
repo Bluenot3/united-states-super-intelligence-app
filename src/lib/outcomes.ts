@@ -126,7 +126,7 @@ export interface OutcomeSummary {
   jurisdictionRows: { code: string; students: number; deployed: number; capstones: number; users30d: number; deploymentRate: number | null; capstoneRate: number | null; meanGain: number | null; selected: boolean }[];
 }
 
-const REQUIRED_COLUMNS = ['cohort', 'track', 'state', 'delivery', 'site', 'stage', 'days', 'users', 'deploys', 'live90', 'host', 'uptime', 'att', 'pre_total', 'post_total', ...ASSESSMENT_CONSTRUCTS.flatMap(item => [`pre_${item.key}`, `post_${item.key}`])];
+const REQUIRED_COLUMNS = ['cohort', 'eday', 'track', 'state', 'delivery', 'site', 'stage', 'days', 'users', 'deploys', 'live90', 'host', 'uptime', 'att', 'pre_total', 'post_total', ...ASSESSMENT_CONSTRUCTS.flatMap(item => [`pre_${item.key}`, `post_${item.key}`])];
 
 /** Decode the original column layout without evaluating or copying reference HTML code. */
 export function decodePackedOutcomes(meta: OutcomeMeta, bytes: Uint8Array, source: OutcomeSource): OutcomesDataset {

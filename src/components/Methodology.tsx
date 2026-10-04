@@ -1,6 +1,9 @@
 import { ArrowUpRight, ChevronDown, LockKeyhole, ShieldCheck } from 'lucide-react';
 
 const definitions = [
+  ['Modeled enrollment date', 'September 9 of the cohort year plus the recorded enrollment-day offset, calculated in UTC.'],
+  ['Cumulative enrollment', 'Enrollment records whose modeled join date is on or before the date cursor. Unique people across cohorts cannot be deduplicated.'],
+  ['Dated outcomes', 'Only enrollment and first deployment have reconstructable dates. Stage, assessment and credential views show eventual cohort outcomes.'],
   ['Deployment rate', 'Records at stage S2 or above ÷ all records in the current view.'],
   ['Public launch rate', 'Records at stage S5 or above ÷ all records in the current view.'],
   ['Capstone rate', 'Records at stage S7 ÷ all records in the current view.'],

@@ -14,7 +14,7 @@ npm.cmd run dev -- --port 5173
 Open `http://127.0.0.1:5173/`. Navigation uses hash routes:
 
 - `#overview`: the public front door, modeled summary, interactive cohort chart, and ecosystem entry points.
-- `#impact`: shared-record filters, eight defined KPIs, cohort comparison, progression, five assessment constructs, deployment timing, jurisdiction comparisons, and aggregate JSON export.
+- `#impact`: exact daily enrollment replay, cumulative growth/daily arrivals/season comparison, four morphing full-record scenes, eight-measure parallel strands with exact intersecting brushes, five analytical atlas views, existing eight KPIs and aggregate JSON export.
 - `#ecosystem`: source-grounded platform/program connections and admin-preview boundaries.
 - `#themes`: select a complete theme and keep multiple favorites on this device.
 - `#methodology`: provenance, definitions, source limits, and the future aggregate publishing boundary.
@@ -43,6 +43,12 @@ npm.cmd run build
 ```
 
 Data provenance includes SHA-256 fingerprints. All charts and filtered KPIs derive from the same selected records. Export contains aggregate data and source disclosure. Cohort and jurisdiction comparison charts intentionally retain context outside the selected year/jurisdiction. App audience reach sums per-app user counts; it is not a deduplicated population-wide count.
+
+The enrollment chronicle reconstructs the attachment's exact date rule: `Date.UTC(cohortYear, 8, 9 + eday)`. Modeled joins span September 9 through November 10 of each cohort. Cumulative enrollment after each full season is 6,200 → 17,500 → 34,300; independent cohort sizes are 6,200 / 11,300 / 16,800. At October 4, 2026, cumulative modeled joins are 24,470. The complete series includes future modeled dates and is labeled accordingly.
+
+The date cursor controls the chronicle and student universe. The strand field, analytical atlas and ledger describe eventual outcomes across the full enrollment period under the shared cohort filters; no achievement dates are invented. The student universe draws one mark for every selected record joined by the cursor. The strand visualization draws up to 2,500 deterministic sample records; its brush statistics use the complete filtered population. Canvas motion stops when settled, offscreen or hidden, and honors Still mode and reduced motion.
+
+Analysis links preserve `date`, `scene`, `time`, `atlas`, `cohort`, `track`, `jurisdiction` and `delivery` when present. Filter values are validated against the actual source dictionaries. See [impact design and verification](docs/impact-visualization-design.md).
 
 See [metrics contract](docs/metrics-contract.md) for exact denominator definitions and the proposed future Arsenal admin publication payload. The admin connection is not active in this preview.
 

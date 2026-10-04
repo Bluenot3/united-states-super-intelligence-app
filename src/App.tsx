@@ -8,6 +8,7 @@ import Methodology from './components/Methodology';
 import Impact from './components/Impact';
 import CohortChart from './components/CohortChart';
 import { loadOutcomes, aggregateOutcomes, DEFAULT_FILTERS, type OutcomeFilters } from './lib/outcomes';
+import { readAnalysisFilters, writeAnalysisFilters } from './lib/impact-state';
 
 type Page = 'overview' | 'impact' | 'ecosystem' | 'themes' | 'methodology';
 const nav = [{id:'overview',label:'Overview',icon:Home},{id:'impact',label:'Impact observatory',icon:ChartNoAxesCombined},{id:'ecosystem',label:'Ecosystem',icon:Layers3},{id:'themes',label:'Theme studio',icon:Palette},{id:'methodology',label:'Methodology',icon:BookOpen}] as const;
@@ -24,7 +25,9 @@ export default function App(){
   const [error,setError]=useState('');
   const [filters,setFilters]=useState<OutcomeFilters>({...DEFAULT_FILTERS});
   const [retry,setRetry]=useState(0);
-  useEffect(()=>{let alive=true;setError('');loadOutcomes().then(d=>{if(alive)setDataset(d);}).catch(e=>{if(alive)setError(e instanceof Error?e.message:'The reference data could not load.');});return()=>{alive=false;};},[retry]);
+  useEffect(()=>{let alive=true;setError('');loadOutcomes().then(d=>{if(alive){setFilters(readAnalysisFilters(d));setDataset(d);}}).catch(e=>{if(alive)setError(e instanceof Error?e.message:'The reference data could not load.');});return()=>{alive=false;};},[retry]);
+  useEffect(()=>{if(dataset)writeAnalysisFilters(filters);},[dataset,filters]);
+  useEffect(()=>{if(!dataset)return;const handler=()=>setFilters(readAnalysisFilters(dataset));addEventListener('popstate',handler);return()=>removeEventListener('popstate',handler);},[dataset]);
   useEffect(()=>{const handler=()=>{setPage(getPage());setMobileNav(false);window.scrollTo({top:0,behavior:'instant'});};addEventListener('hashchange',handler);return()=>removeEventListener('hashchange',handler);},[]);
   useEffect(()=>{document.documentElement.dataset.theme=theme;document.documentElement.dataset.quiet=String(quiet);try{localStorage.setItem('ussi:theme',theme);localStorage.setItem('ussi:quiet',String(quiet));}catch{/* Session remains usable when storage is unavailable. */}const url=new URL(location.href);url.searchParams.set('theme',theme);history.replaceState(null,'',url);},[theme,quiet]);
   const all=useMemo(()=>dataset?aggregateOutcomes(dataset,DEFAULT_FILTERS):null,[dataset]);
@@ -51,7 +54,7 @@ export default function App(){
           <div className="section-title"><div><span className="eyebrow">CONNECTED BY ZEN</span><h2>Many platforms. One purpose.</h2></div><button className="text-button" onClick={()=>navigate('ecosystem')}>Explore the ecosystem <ArrowRight size={16}/></button></div><Ecosystem compact/>
           <div className="theme-invitation"><div><Compass size={23}/><span>Same intelligence. A different atmosphere.</span></div><button className="text-button" onClick={()=>navigate('themes')}>Find your USSI <ArrowRight size={16}/></button></div>
         </>}
-        {page==='impact'&&(dataset?<Impact dataset={dataset} filters={filters} onFiltersChange={setFilters}/>:<section className="page-header"><h1>Opening the observatory.</h1><p role="status">{error||'Decoding the local modeled dataset…'}</p>{error&&<button className="button-outline" onClick={()=>setRetry(r=>r+1)}><RotateCcw size={16}/>Retry data load</button>}</section>)}
+        {page==='impact'&&(dataset?<Impact dataset={dataset} filters={filters} onFiltersChange={setFilters} quiet={quiet} onQuietChange={setQuiet}/>:<section className="page-header"><h1>Opening the observatory.</h1><p role="status">{error||'Decoding the local modeled dataset…'}</p>{error&&<button className="button-outline" onClick={()=>setRetry(r=>r+1)}><RotateCcw size={16}/>Retry data load</button>}</section>)}
         {page==='ecosystem'&&<Ecosystem/>}
         {page==='themes'&&<ThemeStudio theme={theme} onThemeChange={setTheme} quiet={quiet} onQuietChange={setQuiet}/>}
         {page==='methodology'&&<Methodology/>}

@@ -1,12 +1,17 @@
 import { useMemo, useState } from 'react';
 import { ArrowUpRight, Download, LockKeyhole, RotateCcw } from 'lucide-react';
-import { aggregateOutcomes, getFilterOptions, downloadAggregateJson, DEFAULT_FILTERS, type OutcomesDataset, type OutcomeFilters } from '../lib/outcomes';
+import { aggregateOutcomes, getFilterOptions, createAggregateExport, DEFAULT_FILTERS, type OutcomesDataset, type OutcomeFilters } from '../lib/outcomes';
 import CohortChart from './CohortChart';
+import ImpactChronicle from './ImpactChronicle';
+import ImpactAtlas from './ImpactAtlas';
+import DataStrands from './DataStrands';
+import { createImpactExplorationExport, enrolledThrough, exploreImpact } from '../lib/impact-exploration';
 
 const n=(value:number)=>value.toLocaleString('en-US');
 const p=(value:number|null)=>value===null?'—':`${(value*100).toFixed(1)}%`;
-export default function Impact({dataset,filters,onFiltersChange}:{dataset:OutcomesDataset;filters:OutcomeFilters;onFiltersChange:(filters:OutcomeFilters)=>void}){
+export default function Impact({dataset,filters,onFiltersChange,quiet,onQuietChange}:{dataset:OutcomesDataset;filters:OutcomeFilters;onFiltersChange:(filters:OutcomeFilters)=>void;quiet:boolean;onQuietChange:(quiet:boolean)=>void}){
   const summary=useMemo(()=>aggregateOutcomes(dataset,filters),[dataset,filters]);
+  const exploration=useMemo(()=>exploreImpact(dataset,filters),[dataset,filters]);
   const options=useMemo(()=>getFilterOptions(dataset),[dataset]);
   const [allMetrics,setAllMetrics]=useState(false);
   const firstIds=['students','deployment','deployDays','assessment'];
@@ -14,9 +19,21 @@ export default function Impact({dataset,filters,onFiltersChange}:{dataset:Outcom
   const timing=[{label:'0–1',min:0,max:1},{label:'2–3',min:2,max:3},{label:'4–7',min:4,max:7},{label:'8–14',min:8,max:14},{label:'15–30',min:15,max:30},{label:'31–60',min:31,max:60},{label:'61+',min:61,max:Infinity}].map(b=>({...b,count:summary.deployDays.reduce((s,r)=>s+(r.days>=b.min&&r.days<=b.max?r.count:0),0)}));
   const maxTiming=Math.max(1,...timing.map(t=>t.count));
   const hasFilter=Object.values(filters).some(v=>v!=='all');
+  const downloadView=()=>{
+    const params=new URLSearchParams(location.search);
+    const date=params.get('date')||exploration.temporal.enrollmentEnd||dataset.source.cohorts.at(-1)+'-11-10';
+    const payload={...createAggregateExport(summary),view:{date,scene:params.get('scene'),time:params.get('time'),atlas:params.get('atlas'),enrollmentScope:'joined-by-date',outcomeScope:'eventual-full-selected-cohort-results'},enrollmentAsOf:enrolledThrough(exploration,date),exploration:createImpactExplorationExport(exploration)};
+    const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)+'\n'],{type:'application/json'}));
+    const link=document.createElement('a');link.href=url;link.download=`ussi-modeled-impact-${filters.cohort}-${date}.json`;link.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
   return <div className="impact-view">
-    <div className="page-header page-header--actions"><div><span className="eyebrow">AI PIONEER · IMPACT OBSERVATORY</span><h1>An expanding field<br/>of possibility<span>.</span></h1><p>Explore the AI Pioneer reference model. Every number here is modeled, not an observed program result.</p></div><button className="button-outline" onClick={()=>downloadAggregateJson(summary)}><Download size={17}/>Download view</button></div>
+    <div className="page-header page-header--actions"><div><span className="eyebrow">AI PIONEER · THE LIVING DATA OBSERVATORY</span><h1>Intelligence,<br/>in motion<span>.</span></h1><p>Follow modeled enrollments through 2024–2026, replay exact join dates, and explore the outcomes from multiple angles. Every record is synthetic.</p></div><button className="button-outline" onClick={downloadView}><Download size={17}/>Download view</button></div>
     <div className="filter-bar"><div className="cohort-filters"><span className="filter-label">Cohort</span><div className="segmented">{options.cohort.map(o=><button key={o.value} aria-pressed={filters.cohort===o.value} disabled={o.disabled} title={o.disabled?'2027 is sealed. Release reference: March 30, 2027, Eastern time. New data must be published.':undefined} onClick={()=>onFiltersChange({...filters,cohort:o.value as OutcomeFilters['cohort']})}>{o.value==='all'?'All cohorts':o.value}{o.disabled&&<LockKeyhole size={11}/>}</button>)}</div></div><div className="select-filters">{([{key:'track',label:'Build track'},{key:'jurisdiction',label:'Jurisdiction'},{key:'delivery',label:'Delivery'}] as const).map(f=><label key={f.key}><span>{f.label}</span><select value={filters[f.key]} onChange={e=>onFiltersChange({...filters,[f.key]:e.target.value})}>{options[f.key].map(o=><option key={o.value} value={o.value}>{o.label}</option>)}</select></label>)}{hasFilter&&<button className="icon-button" title="Reset all filters" aria-label="Reset all filters" onClick={()=>onFiltersChange({...DEFAULT_FILTERS})}><RotateCcw size={17}/></button>}</div></div>
+    <ImpactChronicle dataset={dataset} filters={filters} exploration={exploration} onFiltersChange={onFiltersChange} quiet={quiet} onQuietChange={onQuietChange}/>
+    <DataStrands dataset={dataset} filters={filters} quiet={quiet}/>
+    <ImpactAtlas dataset={dataset} summary={summary} filters={filters} exploration={exploration} onFiltersChange={onFiltersChange}/>
+    <div className="section-title"><div><span className="eyebrow">THE ANALYTICAL LEDGER</span><h2>The outcomes, in detail.</h2><p className="chart-note">Eventual modeled results for all records matching the cohort filters. The enrollment date cursor applies to the chronicle and student field above.</p></div></div>
     <div className="impact-data-caption"><span className="modeled-label">MODELED · {n(summary.students)} RECORDS IN VIEW</span><button className="text-button" onClick={()=>setAllMetrics(v=>!v)}>{allMetrics?'Show key metrics':'Show all eight metrics'}</button></div>
     <div className="impact-kpis">{kpis.map(k=><div key={k.id} className="kpi"><strong>{k.formatted}{k.id==='deployDays'&&k.value!==null&&<small>d</small>}</strong><span>{k.label}</span><details><summary>{k.detail}</summary><p>{k.definition}</p></details></div>)}</div>
     {summary.students===0?<div className="empty-state"><h2>No modeled records match this view.</h2><p>Try another combination of build track, jurisdiction, and delivery.</p><button className="button-outline" onClick={()=>onFiltersChange({...DEFAULT_FILTERS})}>Reset filters</button></div>:<>

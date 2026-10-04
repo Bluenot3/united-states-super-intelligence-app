@@ -12,7 +12,17 @@ Filters are `{ cohort: 'all' | '2024' | '2025' | '2026' | '2027', track: 'all' |
 
 The immutable preview version is `aip-modeled-2024-2026-v1`. The provenance records SHA-256 hashes of the original HTML, compressed pack and decoded pack. All 34,300 rows are generated; no metric is an observed program result. The 2027 cohort is absent from the embedded pack. Its reference release date is March 30, 2027 at 12:00 AM Eastern. A countdown does not publish unavailable rows: a future release must be explicitly reviewed and supplied.
 
-## Canonical metric meanings
+## Enrollment chronology
+
+The packed `eday` field is an enrollment-day offset. The attachment reconstructs each UTC date as `Date.UTC(cohortYear, 8, 9 + eday)`. Each complete modeled season runs September 9–November 10. The chronicle uses these exact daily events, including dates after the current date in the full 2026 model. Calendar date selection, replay and cumulative curves count only records joined by the selected date.
+
+Independent cohort enrollment is 6,200 / 11,300 / 16,800. Across-cohort cumulative enrollment reaches 6,200 / 17,500 / 34,300 after each full season. Through October 4, 2026, the exact modeled total is 24,470, with 9,830 modeled future joins remaining. These totals count enrollment records; there is no stable identity for deduplicating unique people across cohorts.
+
+Only first deployment can also be assigned a derived event date: enrollment plus recorded `days`, for S2+ records. Highest stage, capstone, assessments, credentials and 90-day survival are final snapshots without achievement timestamps. Those views describe eventual modeled outcomes and must not imply the achievements had occurred by the enrollment cursor date.
+
+The expanded aggregate download preserves the chosen date and scene, exact enrollment as-of totals, full daily/monthly chronology and filtered analytical aggregates. It excludes source row indices, scatter records and synthetic site identifiers. Its ordinary outcome totals retain the full selected-cohort scope, explicitly distinguished from enrollment as-of scope.
+
+## Outcome definitions
 
 | Metric | Definition and denominator |
 | --- | --- |
