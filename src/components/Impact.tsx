@@ -5,6 +5,8 @@ import CohortChart from './CohortChart';
 import ImpactChronicle from './ImpactChronicle';
 import ImpactAtlas from './ImpactAtlas';
 import DataStrands from './DataStrands';
+import OutcomeTerrain from './OutcomeTerrain';
+import { buildOutcomeTerrain, type TerrainPair } from '../lib/outcome-terrain';
 import { createImpactExplorationExport, enrolledThrough, exploreImpact } from '../lib/impact-exploration';
 
 const n=(value:number)=>value.toLocaleString('en-US');
@@ -22,7 +24,9 @@ export default function Impact({dataset,filters,onFiltersChange,quiet,onQuietCha
   const downloadView=()=>{
     const params=new URLSearchParams(location.search);
     const date=params.get('date')||exploration.temporal.enrollmentEnd||dataset.source.cohorts.at(-1)+'-11-10';
-    const payload={...createAggregateExport(summary),view:{date,scene:params.get('scene'),time:params.get('time'),atlas:params.get('atlas'),enrollmentScope:'joined-by-date',outcomeScope:'eventual-full-selected-cohort-results'},enrollmentAsOf:enrolledThrough(exploration,date),exploration:createImpactExplorationExport(exploration)};
+    const pair=(['prepost','attendance-gain','attendance-days'].includes(params.get('terrain')||'')?params.get('terrain'):'prepost') as TerrainPair;
+    const terrain=buildOutcomeTerrain(dataset,filters,pair);
+    const payload={...createAggregateExport(summary),view:{date,scene:params.get('scene'),time:params.get('time'),atlas:params.get('atlas'),camera:params.get('camera'),orbit:params.get('orbit'),terrain:pair,enrollmentScope:'joined-by-date',outcomeScope:'eventual-full-selected-cohort-results'},enrollmentAsOf:enrolledThrough(exploration,date),exploration:createImpactExplorationExport(exploration),topography:{pair,selected:terrain.totalSelected,eligible:terrain.eligibleCount,excluded:terrain.excludedCount,xAxis:terrain.xAxis,yAxis:terrain.yAxis,gridSize:terrain.gridSize,exactBinCounts:Array.from(terrain.raw),densityMethod:'mass-preserving-gaussian',sigmaCells:terrain.sigma,heightScope:'smoothed-density-relative-to-filtered-peak',correlation:terrain.correlation}};
     const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)+'\n'],{type:'application/json'}));
     const link=document.createElement('a');link.href=url;link.download=`ussi-modeled-impact-${filters.cohort}-${date}.json`;link.click();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -31,8 +35,9 @@ export default function Impact({dataset,filters,onFiltersChange,quiet,onQuietCha
     <div className="page-header page-header--actions"><div><span className="eyebrow">AI PIONEER · THE LIVING DATA OBSERVATORY</span><h1>Intelligence,<br/>in motion<span>.</span></h1><p>Follow modeled enrollments through 2024–2026, replay exact join dates, and explore the outcomes from multiple angles. Every record is synthetic.</p></div><button className="button-outline" onClick={downloadView}><Download size={17}/>Download view</button></div>
     <div className="filter-bar"><div className="cohort-filters"><span className="filter-label">Cohort</span><div className="segmented">{options.cohort.map(o=><button key={o.value} aria-pressed={filters.cohort===o.value} disabled={o.disabled} title={o.disabled?'2027 is sealed. Release reference: March 30, 2027, Eastern time. New data must be published.':undefined} onClick={()=>onFiltersChange({...filters,cohort:o.value as OutcomeFilters['cohort']})}>{o.value==='all'?'All cohorts':o.value}{o.disabled&&<LockKeyhole size={11}/>}</button>)}</div></div><div className="select-filters">{([{key:'track',label:'Build track'},{key:'jurisdiction',label:'Jurisdiction'},{key:'delivery',label:'Delivery'}] as const).map(f=><label key={f.key}><span>{f.label}</span><select value={filters[f.key]} onChange={e=>onFiltersChange({...filters,[f.key]:e.target.value})}>{options[f.key].map(o=><option key={o.value} value={o.value}>{o.label}</option>)}</select></label>)}{hasFilter&&<button className="icon-button" title="Reset all filters" aria-label="Reset all filters" onClick={()=>onFiltersChange({...DEFAULT_FILTERS})}><RotateCcw size={17}/></button>}</div></div>
     <ImpactChronicle dataset={dataset} filters={filters} exploration={exploration} onFiltersChange={onFiltersChange} quiet={quiet} onQuietChange={onQuietChange}/>
+    <OutcomeTerrain dataset={dataset} filters={filters} quiet={quiet}/>
     <DataStrands dataset={dataset} filters={filters} quiet={quiet}/>
-    <ImpactAtlas dataset={dataset} summary={summary} filters={filters} exploration={exploration} onFiltersChange={onFiltersChange}/>
+    <ImpactAtlas dataset={dataset} summary={summary} filters={filters} exploration={exploration} onFiltersChange={onFiltersChange} quiet={quiet}/>
     <div className="section-title"><div><span className="eyebrow">THE ANALYTICAL LEDGER</span><h2>The outcomes, in detail.</h2><p className="chart-note">Eventual modeled results for all records matching the cohort filters. The enrollment date cursor applies to the chronicle and student field above.</p></div></div>
     <div className="impact-data-caption"><span className="modeled-label">MODELED · {n(summary.students)} RECORDS IN VIEW</span><button className="text-button" onClick={()=>setAllMetrics(v=>!v)}>{allMetrics?'Show key metrics':'Show all eight metrics'}</button></div>
     <div className="impact-kpis">{kpis.map(k=><div key={k.id} className="kpi"><strong>{k.formatted}{k.id==='deployDays'&&k.value!==null&&<small>d</small>}</strong><span>{k.label}</span><details><summary>{k.detail}</summary><p>{k.definition}</p></details></div>)}</div>

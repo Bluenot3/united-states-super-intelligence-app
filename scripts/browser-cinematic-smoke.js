@@ -1,0 +1,145 @@
+async (page) => {
+  const check = (value, message) => { if (!value) throw new Error(message); };
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+  const frames = () => page.evaluate(() => new Promise(resolve => { let count = 0; const tick = () => ++count === 18 ? resolve() : requestAnimationFrame(tick); requestAnimationFrame(tick); }));
+  const capture = (locator, name) => locator.screenshot({path:`docs/previews/cinematic-${name}.png`, animations:'disabled', style:'.skip-link:not(:focus){visibility:hidden}'});
+  await page.setViewportSize({width:1536,height:1024});
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.goto('http://127.0.0.1:4173/?theme=quicksilver&scene=cohorts&orbit=0&date=2026-11-10&terrain=prepost#impact');
+  await page.getByTestId('chronicle-total').waitFor();
+  if (await page.getByRole('button',{name:'Enable motion',exact:true}).count()) await page.getByRole('button',{name:'Enable motion',exact:true}).click();
+  const field = page.locator('.student-field'), fieldCanvas = field.locator('canvas').first();
+  const terrain = page.locator('.outcome-terrain'), terrainCanvas = terrain.locator('canvas.terrain-surface');
+  const settleField = async () => { await fieldCanvas.scrollIntoViewIfNeeded(); await page.waitForFunction(()=>{const c=document.querySelector('.student-field canvas'),count=document.querySelector('.field-count-instrument strong')?.textContent.replaceAll(',',''); return c?.dataset.settled==='true'&&c.dataset.marks===count&&c.dataset.scene===new URLSearchParams(location.search).get('scene');}); };
+  const settleTerrain = async () => { await terrainCanvas.scrollIntoViewIfNeeded(); await page.waitForFunction(()=>{const c=document.querySelector('.terrain-surface'),host=document.querySelector('.outcome-terrain'); return c?.dataset.settled==='true'&&c.dataset.pair===host?.dataset.pair&&c.dataset.eligibleCount===host?.dataset.eligibleCount;}); };
+  await settleField();
+  check(await fieldCanvas.getAttribute('data-marks')==='34300','All source records must render');
+  check(await fieldCanvas.getAttribute('data-renderer')==='webgl','Student field must use native WebGL in this browser');
+  await capture(field,'constellation');
+  for (const [name,scene] of [['Time ribbons','chronology'],['Stage helix','ladder'],['Learning space','learning']]) {
+    await field.getByRole('button',{name,exact:true}).click();
+    await page.waitForFunction(scene=>{const c=document.querySelector('.student-field canvas');return c?.dataset.scene===scene&&c?.dataset.settled==='true';},scene);
+    check(await fieldCanvas.getAttribute('data-marks')==='34300',`${name} changed the source count`);
+    await capture(field,scene);
+  }
+  await field.getByRole('button',{name:'Cohort orbits',exact:true}).click(); await settleField();
+  await field.getByRole('button',{name:'Next synthetic record',exact:true}).click();
+  check(await field.locator('.field-inspector').isVisible(),'Exact record inspector');
+  await field.getByRole('button',{name:'Close inspection',exact:true}).click();
+  const initialCamera=await fieldCanvas.getAttribute('data-camera');
+  await field.getByRole('button',{name:'Rotate view right',exact:true}).click(); await frames();
+  check(await fieldCanvas.getAttribute('data-camera')!==initialCamera,'Camera rotation');
+  await field.getByRole('button',{name:'Zoom in',exact:true}).click(); await frames();
+  check(Number((await fieldCanvas.getAttribute('data-camera')).split(',')[2])===1.1,'Camera zoom');
+  await fieldCanvas.focus(); await fieldCanvas.press('ArrowUp'); await frames();
+  const savedCamera=new URL(page.url()).searchParams.get('camera');
+  await page.reload(); await settleField();
+  check(await fieldCanvas.getAttribute('data-camera')===savedCamera,'Shared camera did not restore');
+  await field.getByRole('button',{name:'Reset camera',exact:true}).click(); await frames();
+  check(await fieldCanvas.getAttribute('data-camera')===initialCamera,'Reset camera');
+  const box=await fieldCanvas.boundingBox();
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2); await page.mouse.down();
+  await page.mouse.move(box.x+box.width/2+65,box.y+box.height/2+12,{steps:5}); await page.mouse.up(); await frames();
+  check(await fieldCanvas.getAttribute('data-camera')!==initialCamera,'Mouse drag must rotate');
+  check(await field.locator('.field-inspector').count()===0,'Drag must not inspect a record');
+  await field.getByRole('button',{name:'Frame the data',exact:true}).click();
+  await field.getByRole('button',{name:'Auto orbit',exact:true}).click(); await frames();
+  const orbitCamera=await fieldCanvas.getAttribute('data-camera'); await frames();
+  check(await fieldCanvas.getAttribute('data-camera')!==orbitCamera,'Auto orbit must move the camera');
+  await settleTerrain(); await frames(); const offscreenFrame=await fieldCanvas.getAttribute('data-frame'); await frames();
+  check(await fieldCanvas.getAttribute('data-frame')===offscreenFrame,'Offscreen field must stop rendering');
+  await settleField(); await field.getByRole('button',{name:'Auto orbit',exact:true}).click(); await frames();
+  const pausedFrame=await fieldCanvas.getAttribute('data-frame'); await frames();
+  check(await fieldCanvas.getAttribute('data-frame')===pausedFrame,'Paused orbit must stop rendering');
+  await field.getByRole('button',{name:'Frame the data',exact:true}).click();
+  await page.getByLabel('Exact enrollment as-of date').fill('2026-10-04'); await settleField();
+  check(await fieldCanvas.getAttribute('data-marks')==='24470','As-of field count');
+  await settleTerrain();
+  check(await terrainCanvas.getAttribute('data-eligible-count')==='34300','Full-period terrain must remain independent of date cursor');
+  check(await terrainCanvas.getAttribute('data-renderer')==='webgl','Terrain native WebGL');
+  await page.getByRole('button',{name:'Show complete modeled enrollment period',exact:true}).click();
+  for (const [name,pair,eligible] of [['Before / after','prepost',34300],['Attendance / gain','attendance-gain',34300],['Attendance / deployment','attendance-days',28276]]) {
+    await terrain.getByRole('button',{name,exact:true}).click(); await settleTerrain();
+    check(await terrainCanvas.getAttribute('data-pair')===pair,'Terrain pair rendering');
+    check(await terrainCanvas.getAttribute('data-bin-total')===String(eligible),'Terrain exact-bin denominator');
+    check(new URL(page.url()).searchParams.get('terrain')===pair,'Terrain shareable pair');
+    await capture(terrain,`terrain-${pair}`);
+  }
+  await page.reload(); await settleTerrain();
+  check(await terrainCanvas.getAttribute('data-pair')==='attendance-days','Shared terrain pair did not restore');
+  check(new URL(page.url()).searchParams.get('theme')==='quicksilver','Pair selection lost theme state');
+  await terrain.getByRole('button',{name:'Show exact count table',exact:true}).click();
+  check(await terrain.locator('tbody tr').count()===40,'Exact bin pagination');
+  await terrain.getByRole('button',{name:'Next terrain bin page',exact:true}).click();
+  check((await terrain.locator('.terrain-pagination>span').textContent()).startsWith('41'),'Exact bin next page');
+  await terrain.getByRole('button',{name:/Probe source bin with/}).first().click();
+  check((await terrain.locator('.terrain-readout').textContent()).includes('EXACT SOURCE BIN'),'Exact-bin probe');
+  await terrain.getByRole('button',{name:'Hide exact count table',exact:true}).click();
+  await terrain.getByRole('button',{name:'Before / after',exact:true}).click(); await settleTerrain();
+  const terrainCamera=await terrainCanvas.getAttribute('data-camera');
+  await terrainCanvas.focus(); await terrainCanvas.press('ArrowRight'); await frames();
+  check(await terrainCanvas.getAttribute('data-camera')!==terrainCamera,'Terrain keyboard orbit');
+  await terrain.getByRole('button',{name:'Reset',exact:true}).click();
+  // Actual GPU loss uses the real context and keeps the same source geometry in fallback.
+  for (const [selector,locator,countAttribute,expected] of [['.student-field canvas',fieldCanvas,'data-marks','34300'],['.terrain-surface',terrainCanvas,'data-bin-total','34300']]) {
+    await locator.scrollIntoViewIfNeeded(); await frames();
+    const supported=await page.evaluate(selector=>{ const ext=document.querySelector(selector).getContext('webgl').getExtension('WEBGL_lose_context'); window.__cinemaLoss=ext; ext?.loseContext(); return !!ext; },selector);
+    check(supported,'Context-loss extension unavailable');
+    await page.waitForFunction(selector=>document.querySelector(selector)?.dataset.renderer==='canvas2d',selector);
+    check(await locator.getAttribute(countAttribute)===expected,'Context loss changed counts');
+    await frames(); await page.evaluate(()=>window.__cinemaLoss.restoreContext());
+    await page.waitForFunction(selector=>document.querySelector(selector)?.dataset.renderer==='webgl',selector);
+    check(await locator.getAttribute(countAttribute)===expected,'Context restoration changed counts');
+  }
+  await page.emulateMedia({reducedMotion:'reduce'}); await settleField(); await frames();
+  check(await field.getByRole('button',{name:'Auto orbit',exact:true}).isDisabled(),'OS reduced motion must disable orbit');
+  check(await fieldCanvas.getAttribute('data-rotating')==='false','OS reduced motion must stop rotation');
+  await settleTerrain(); check(await terrain.getByRole('button',{name:'Motion reduced',exact:true}).isDisabled(),'Terrain reduced motion');
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  const fallback=await page.context().newPage();
+  await fallback.addInitScript(()=>{ const native=HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext=function(type,...args){ return /^webgl/.test(type)?null:native.call(this,type,...args); }; });
+  await fallback.goto('http://127.0.0.1:4173/?theme=quicksilver&scene=cohorts&orbit=0#impact');
+  await fallback.locator('.student-field canvas').first().scrollIntoViewIfNeeded();
+  await fallback.waitForFunction(()=>{const c=document.querySelector('.student-field canvas');return c?.dataset.renderer==='canvas2d'&&c?.dataset.marks==='34300'&&c?.dataset.settled==='true';});
+  await fallback.locator('.terrain-surface').scrollIntoViewIfNeeded();
+  await fallback.waitForFunction(()=>{const c=document.querySelector('.terrain-surface');return c?.dataset.renderer==='canvas2d'&&c?.dataset.binTotal==='34300'&&c?.dataset.settled==='true';});
+  await fallback.close(); await page.bringToFront();
+  await page.locator('.cohort-filters').getByRole('button',{name:'2024',exact:true}).click();
+  await page.getByRole('combobox',{name:'Jurisdiction',exact:true}).selectOption('ID');
+  await settleField(); check(await fieldCanvas.getAttribute('data-marks')==='0','Empty source intersection field');
+  await settleTerrain(); check(await terrainCanvas.getAttribute('data-bin-total')==='0','Empty source intersection terrain');
+  check(await terrain.locator('.terrain-empty').isVisible(),'Empty terrain state');
+  await page.getByRole('button',{name:'Reset all filters',exact:true}).click();
+  await page.setViewportSize({width:390,height:844});
+  await field.getByRole('button',{name:'Frame the data',exact:true}).click(); await settleField();
+  check(await fieldCanvas.evaluate(el=>getComputedStyle(el).touchAction)==='pan-y','Default phone scrolling');
+  await field.getByRole('button',{name:'Touch orbit',exact:true}).click();
+  check(await fieldCanvas.evaluate(el=>getComputedStyle(el).touchAction)==='none','Explicit touch orbit');
+  await field.getByRole('button',{name:'Exit touch orbit',exact:true}).click();
+  check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile field overflow');
+  await capture(field,'constellation-mobile');
+  await settleTerrain();
+  check(await terrainCanvas.evaluate(el=>getComputedStyle(el).touchAction)==='pan-y','Terrain default phone scrolling');
+  await terrain.getByRole('button',{name:'Touch orbit',exact:true}).click();
+  check(await terrainCanvas.evaluate(el=>getComputedStyle(el).touchAction)==='none','Terrain explicit touch orbit');
+  await terrain.getByRole('button',{name:'Touch orbit on',exact:true}).click();
+  check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile terrain overflow');
+  await capture(terrain,'terrain-mobile');
+  const atlas=page.locator('.impact-atlas');
+  const atlasViews=[['Capability flows','flow'],['Learning landscape','learning'],['Hosting fabric','hosting'],['Geographic reach','geography'],['Site fingerprints','sites']];
+  for(const [name,id] of atlasViews) {
+    await atlas.getByRole('tab',{name,exact:true}).click(); await atlas.scrollIntoViewIfNeeded();
+    await capture(atlas,`atlas-${id}-mobile`);
+  }
+  await page.setViewportSize({width:1536,height:1024});
+  for(const [name,id] of atlasViews) {
+    await atlas.getByRole('tab',{name,exact:true}).click(); await atlas.scrollIntoViewIfNeeded();
+    await capture(atlas,`atlas-${id}`);
+  }
+  check(errors.length===0,`Runtime errors: ${errors.join(' | ')}`);
+  await page.setViewportSize({width:1536,height:1024});
+  await page.goto('http://127.0.0.1:4173/?theme=quicksilver&scene=cohorts&orbit=1&date=2026-11-10&terrain=prepost&atlas=flow#impact');
+  return {passed:true,sourceRecords:34300,asOfRecords:24470,terrainEligible:[34300,34300,28276],layouts:4,contextLossAndRestore:2,webglDisabledFallbacks:2,offscreenPause:true,osReducedMotion:true,mobileWidth:390,runtimeErrors:errors};
+}

@@ -22,6 +22,8 @@ Only first deployment can also be assigned a derived event date: enrollment plus
 
 The expanded aggregate download preserves the chosen date and scene, exact enrollment as-of totals, full daily/monthly chronology and filtered analytical aggregates. It excludes source row indices, scatter records and synthetic site identifiers. Its ordinary outcome totals retain the full selected-cohort scope, explicitly distinguished from enrollment as-of scope.
 
+The cinematic download also preserves the validated terrain pair and paused camera/orbit state. `topography` contains exact unsmoothed count bins, selected/eligible/excluded totals, source axis domains, grid size, Gaussian method and σ, relative-density height scope and full-population correlation. Terrain uses the four-filter selection across the complete enrollment period. Before/after and attendance/gain count all selected records; attendance/deployment counts S2+ records only. Negative gains and long deployment outliers stay inside the published axis domains. Smoothed heights are density estimates normalized to the filtered peak and are never exported as achieved outcomes.
+
 ## Outcome definitions
 
 | Metric | Definition and denominator |

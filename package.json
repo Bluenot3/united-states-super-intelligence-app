@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
     "preview": "vite preview --host 127.0.0.1",
-    "verify:data": "node scripts/verify-outcomes.mjs && node scripts/verify-impact-exploration.mjs"
+    "verify:data": "node scripts/verify-outcomes.mjs && node scripts/verify-impact-exploration.mjs && node scripts/verify-cinematic-math.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",

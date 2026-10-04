@@ -14,7 +14,7 @@ npm.cmd run dev -- --port 5173
 Open `http://127.0.0.1:5173/`. Navigation uses hash routes:
 
 - `#overview`: the public front door, modeled summary, interactive cohort chart, and ecosystem entry points.
-- `#impact`: exact daily enrollment replay, cumulative growth/daily arrivals/season comparison, four morphing full-record scenes, eight-measure parallel strands with exact intersecting brushes, five analytical atlas views, existing eight KPIs and aggregate JSON export.
+- `#impact`: cinematic enrollment ribbons and daily replay, four native 3D full-record scenes, interactive outcome-density terrain, eight-measure parallel strands with exact intersecting brushes, five dimensional analytical atlas views, existing eight KPIs and aggregate JSON export.
 - `#ecosystem`: source-grounded platform/program connections and admin-preview boundaries.
 - `#themes`: select a complete theme and keep multiple favorites on this device.
 - `#methodology`: provenance, definitions, source limits, and the future aggregate publishing boundary.
@@ -46,9 +46,11 @@ Data provenance includes SHA-256 fingerprints. All charts and filtered KPIs deri
 
 The enrollment chronicle reconstructs the attachment's exact date rule: `Date.UTC(cohortYear, 8, 9 + eday)`. Modeled joins span September 9 through November 10 of each cohort. Cumulative enrollment after each full season is 6,200 → 17,500 → 34,300; independent cohort sizes are 6,200 / 11,300 / 16,800. At October 4, 2026, cumulative modeled joins are 24,470. The complete series includes future modeled dates and is labeled accordingly.
 
-The date cursor controls the chronicle and student universe. The strand field, analytical atlas and ledger describe eventual outcomes across the full enrollment period under the shared cohort filters; no achievement dates are invented. The student universe draws one mark for every selected record joined by the cursor. The strand visualization draws up to 2,500 deterministic sample records; its brush statistics use the complete filtered population. Canvas motion stops when settled, offscreen or hidden, and honors Still mode and reduced motion.
+The date cursor controls the chronicle and student universe. The terrain, strand field, analytical atlas and ledger describe eventual outcomes across the full enrollment period under the shared cohort filters; no achievement dates are invented. The student universe draws one mark for every selected record joined by the cursor, with native WebGL glow, perspective, four animated layouts, camera controls and exact inspection. A slow camera orbit starts when motion is allowed; it can be paused and stops offscreen or when the document is hidden. Still mode and OS reduced motion render a static view.
 
-Analysis links preserve `date`, `scene`, `time`, `atlas`, `cohort`, `track`, `jurisdiction` and `delivery` when present. Filter values are validated against the actual source dictionaries. See [impact design and verification](docs/impact-visualization-design.md).
+Outcome topography turns exact 50 × 50 source-count bins into a lit, contoured 3D density surface. Three measure pairs cover before/after scores, attendance/score gain and attendance/deployment days. Gaussian smoothing conserves the eligible population's mass; relative height describes density rather than an additional measured outcome. Exact bin, neighborhood and eligible totals remain visible, with a paginated table. Both dense 3D views recover from WebGL context loss and project the same source geometry in Canvas2D when WebGL is unavailable. The strand visualization draws up to 2,500 deterministic sample records; its brush statistics use the complete filtered population.
+
+Analysis links preserve `date`, `scene`, `camera`, `orbit`, `terrain`, `time`, `atlas`, `cohort`, `track`, `jurisdiction` and `delivery` when present. Filter and terrain values are validated against the actual source. Aggregate downloads include exact terrain bins and smoothing metadata. See [impact design and verification](docs/impact-visualization-design.md) and [cinematic scene contract](docs/cinematic-impact-design.md).
 
 See [metrics contract](docs/metrics-contract.md) for exact denominator definitions and the proposed future Arsenal admin publication payload. The admin connection is not active in this preview.
 

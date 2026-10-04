@@ -134,7 +134,7 @@ export default function DataStrands({ dataset, filters, quiet = false }: DataStr
     const resize = () => setWidth(Math.max(960, Math.round(element.clientWidth)));
     resize();
     const observer = new ResizeObserver(resize); observer.observe(element);
-    const visibility = new IntersectionObserver(entries => { visibleRef.current = entries[0].isIntersecting; setOnScreen(entries[0].isIntersecting); }); visibility.observe(element);
+    const visibility = new IntersectionObserver(entries => { const entry = entries.at(-1); if (entry) { visibleRef.current = entry.isIntersecting; setOnScreen(entry.isIntersecting); } }); visibility.observe(element);
     const documentVisibility = () => setDocumentVisible(!document.hidden);
     document.addEventListener('visibilitychange', documentVisibility);
     const themeObserver = new MutationObserver(() => setThemeRevision(value => value + 1));

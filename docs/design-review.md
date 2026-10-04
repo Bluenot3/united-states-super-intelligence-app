@@ -8,7 +8,7 @@ The working preview follows the generated Observatory primary screen, Impact obs
 - Self-hosted Instrument Sans interface and display typography; Space Grotesk numerical readings and several darker editions; Cormorant Garamond in Sovereign/Vellum.
 - Fixed desktop navigation, thin utility header, an open hero, defined aggregate readings, and restrained chart panels. Mobile uses a collapsible navigation drawer and vertical continuation.
 - Whole-page theme tokens control background, surface, text, borders, charts, buttons, typography, and material details. Gallery specimens use the original or generated art for each direction.
-- Still mode and reduced-motion preferences disable moving graphics. Source renderers retain poster fallbacks; only the active sculpture renders with WebGL.
+- Still mode and reduced-motion preferences disable moving graphics. Source sculptures retain poster fallbacks; the impact field and terrain use native WebGL with matching source-based Canvas2D fallbacks.
 
 ## Intentional differences from image concepts
 
@@ -52,3 +52,9 @@ These are local Chromium and static-build checks. They do not verify hosted USSI
 ## Expanded impact review
 
 The impact route now adds exact enrollment replay and three timeline views, four full-record layouts, eight-measure brushed strands and five analytical atlas views. The original analytical ledger and all nine visual themes remain. Twenty additional desktop/phone captures and the final production-browser regression are documented in [impact visualization design](impact-visualization-design.md). The final review corrected flow-label crowding, score-axis/legend collisions, sparse-filter replay restart, quiet-gap trace endpoints and touch-target sizes.
+
+## Cinematic revision
+
+The next impact revision replaces flat record layouts with a perspective point field, visible cohort glow, true 3D camera orbit and spatial morphs. Measured chronology becomes stacked cohort ribbons, aligned seasonal curves and daily-arrival lanes. A new lit, contoured density terrain presents three source-based relationships with exact bin probes. The atlas adds three-stage measured flows, score-bin ridges, isometric hosting columns, jurisdiction skylines and six-petal site glyphs with an exact deployment/capstone profile field.
+
+Fresh captures are saved as `docs/previews/cinematic-*.png`; the atlas and chronology captures under `impact-*.png` are refreshed with the new build. Visual review enlarged the terrain, retained its actual density-height scale, tightened the phone stage, reduced overexposure in dense phone points, and kept direct labels and 44px camera controls readable. See the [scene contract](cinematic-impact-design.md) for source encodings and runtime boundaries.

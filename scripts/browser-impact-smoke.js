@@ -9,20 +9,20 @@ async (page) => {
   await total.waitFor({timeout:20000});
   if(await page.getByRole('button',{name:'Enable motion',exact:true}).count()) await page.getByRole('button',{name:'Enable motion',exact:true}).click();
   check(await total.textContent() === '34,300', 'Complete modeled enrollment total');
-  await page.locator('.enrollment-chronicle').screenshot({path:'docs/previews/impact-chronicle.png'});
+  await page.locator('.enrollment-chronicle').screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:'docs/previews/impact-chronicle.png'});
   const dateInput = page.getByLabel('Exact enrollment as-of date');
   await dateInput.fill('2026-10-04');
-  check(await total.textContent() === '24,470', 'As-of Oct4 count includes future joins');
+  check(await total.textContent() === '24,470', 'As-of Oct4 exact enrollment count');
   const field = page.locator('.student-field');
-  const canvas = field.locator('canvas');
+  const canvas = field.locator('canvas').first();
   await field.scrollIntoViewIfNeeded();
   await page.waitForFunction(() => document.querySelector('.student-field canvas')?.dataset.marks === '24470' && document.querySelector('.student-field canvas')?.dataset.settled === 'true');
   check(await canvas.getAttribute('data-ready') === 'true', 'Full-record field not ready');
-  await field.screenshot({path:'docs/previews/impact-time-ribbons.png'});
+  await field.screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:'docs/previews/impact-time-ribbons.png'});
   for(const [name, id] of [['Cohort orbits','cohorts'],['Stage helix','ladder'],['Learning space','learning']]) {
     await field.getByRole('button',{name,exact:true}).click();
     await page.waitForFunction(scene => {const c=document.querySelector('.student-field canvas');return c?.dataset.scene === scene && c?.dataset.settled === 'true';}, id);
-    await field.screenshot({path:`docs/previews/impact-field-${id}.png`});
+    await field.screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:`docs/previews/impact-field-${id}.png`});
   }
   await field.getByRole('button',{name:'Next synthetic record',exact:true}).click();
   check(await field.locator('.field-inspector').isVisible(), 'Synthetic record inspection');
@@ -39,7 +39,7 @@ async (page) => {
   check(paused < '2026-11-10', 'Replay did not restart exact date sequence');
   await page.getByRole('button',{name:'Daily arrivals',exact:true}).click();
   await page.getByRole('button',{name:'Season comparison',exact:true}).click();
-  await page.locator('.enrollment-chronicle').screenshot({path:'docs/previews/impact-season-comparison.png'});
+  await page.locator('.enrollment-chronicle').screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:'docs/previews/impact-season-comparison.png'});
   await page.getByRole('button',{name:'Show enrollment table',exact:true}).click();
   check(await page.locator('.chronicle-table tbody tr').count()===189, 'Exact enrollment dates missing');
   await page.getByRole('button',{name:'Show enrollment chart',exact:true}).click();
@@ -56,15 +56,17 @@ async (page) => {
   check(await strands.locator('.strands-exact-stats strong').first().textContent() === '34,300', 'Brush reset');
   await strands.getByRole('button',{name:'Flip axis',exact:true}).click();
   await strands.getByRole('button',{name:'Unflip axis',exact:true}).click();
-  await strands.screenshot({path:'docs/previews/impact-strands.png'});
+  await strands.screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:'docs/previews/impact-strands.png'});
   const atlas = page.locator('.impact-atlas');
   const tabs = ['Capability flows','Learning landscape','Hosting fabric','Geographic reach','Site fingerprints'];
   for(const name of tabs) {
     await atlas.getByRole('tab',{name,exact:true}).click();
     check(await atlas.getByRole('tabpanel').isVisible(), `${name} panel unavailable`);
-    await atlas.screenshot({path:`docs/previews/impact-atlas-${name.toLowerCase().replaceAll(' ','-')}.png`});
+    await atlas.screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:`docs/previews/impact-atlas-${name.toLowerCase().replaceAll(' ','-')}.png`});
     await atlas.getByRole('button',{name:'Exact table',exact:true}).click();
-    check(await atlas.getByRole('table').isVisible(), `${name} exact table unavailable`);
+    const exactTables = await atlas.getByRole('table').all();
+    check(exactTables.length > 0, `${name} exact table missing`);
+    for(const exactTable of exactTables) check(await exactTable.isVisible(), `${name} exact table unavailable`);
     await atlas.getByRole('button',{name:'Graphic',exact:true}).click();
   }
   await page.locator('.cohort-filters').getByRole('button',{name:'2025',exact:true}).click();
@@ -83,6 +85,7 @@ async (page) => {
   let json='';for await(const chunk of stream)json+=chunk.toString();
   const exported=JSON.parse(json);
   check(exported.totals.students===35 && exported.enrollmentAsOf.selected===35 && exported.exploration.timeline.length>0,'Rich aggregate download mismatch');
+  check(exported.topography.selected===35 && exported.topography.exactBinCounts.reduce((sum,count)=>sum+count,0)===exported.topography.eligible,'Terrain aggregate download mismatch');
   check(!('points' in exported.exploration.scatter) && !('sites' in exported.exploration),'Rich download leaked source rows or site identifiers');
   await page.getByRole('button',{name:'Reset all filters',exact:true}).click();
   await page.getByRole('button',{name:'Still mode',exact:true}).click();
@@ -91,18 +94,18 @@ async (page) => {
   await page.waitForFunction(()=>document.querySelector('.student-field canvas')?.dataset.scene==='cohorts' && document.querySelector('.student-field canvas')?.dataset.settled==='true');
   await page.setViewportSize({width:390,height:844});
   await page.locator('main').focus();
-  await page.locator('.enrollment-chronicle').screenshot({path:'docs/previews/impact-chronicle-mobile.png',style:'.skip-link:not(:focus){visibility:hidden}'});
+  await page.locator('.enrollment-chronicle').screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:'docs/previews/impact-chronicle-mobile.png'});
   for(const name of tabs) {
     await atlas.getByRole('tab',{name,exact:true}).click();
     check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth), `${name} mobile horizontal overflow`);
-    await atlas.screenshot({path:`docs/previews/impact-mobile-${name.toLowerCase().replaceAll(' ','-')}.png`});
+    await atlas.screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:`docs/previews/impact-mobile-${name.toLowerCase().replaceAll(' ','-')}.png`});
   }
   await field.scrollIntoViewIfNeeded();
   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth), 'Student field mobile overflow');
-  await field.screenshot({path:'docs/previews/impact-field-mobile.png'});
+  await field.screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:'docs/previews/impact-field-mobile.png'});
   await strands.scrollIntoViewIfNeeded();
   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth), 'Strand controls mobile overflow');
-  await strands.screenshot({path:'docs/previews/impact-strands-mobile.png'});
+  await strands.screenshot({animations:'disabled',style:'.skip-link:not(:focus){visibility:hidden}',path:'docs/previews/impact-strands-mobile.png'});
   check(errors.length===0, `Runtime errors: ${errors.join(' | ')}`);
   await page.setViewportSize({width:1536,height:1024});
   await page.getByRole('button',{name:'Enable motion',exact:true}).click();
@@ -115,9 +118,9 @@ async (page) => {
   await page.getByRole('button',{name:'Cumulative growth',exact:true}).click();
   await dateInput.fill('2025-04-01');
   check(await total.textContent()==='6,200','Quiet enrollment gap changed cumulative total');
-  const cumulative = page.locator('.chronicle-plot path[stroke="#8bd8c8"]');
-  const cursorX = await page.locator('.chronicle-plot circle').getAttribute('cx');
-  check((await cumulative.getAttribute('d')).endsWith(`H ${cursorX}`),'Cumulative trace does not reach a gap-date cursor');
+  const cursorX = await page.locator('.chronicle-date-beam').getAttribute('x1');
+  const pastClip = await page.locator('.chronicle-panorama-svg clipPath rect').evaluate(el=>({x:Number(el.getAttribute('x')),width:Number(el.getAttribute('width'))}));
+  check(Math.abs(pastClip.x+pastClip.width-Number(cursorX))<=1.01,'Cumulative ribbon does not reach a gap-date cursor');
   await dateInput.fill('2026-10-05');
   if(await page.evaluate(()=>new Date().toISOString().slice(0,10)<'2026-10-05')) check((await page.locator('.chronicle-disclosure>span').textContent()).startsWith('FUTURE MODELED AS-OF VIEW'),'Partial future date labeled complete period');
   await page.getByRole('combobox',{name:'Build track',exact:true}).selectOption('Agent Builder');
