@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.references/
+output/playwright/
+.env
+.env.*
+!.env.example
+*.local
+design/concepts/
+*.tsbuildinfo
+.playwright/
+.playwright-cli/

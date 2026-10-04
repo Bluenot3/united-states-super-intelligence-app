@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "version": "aip-modeled-2024-2026-v1",
+  "sourceKind": "modeled",
+  "title": "AI Pioneer Program — modeled outcomes",
+  "sourceDocument": "AI Pioneer Outcomes Explorer (1).html",
+  "sourceUrl": "https://huggingface.co/datasets/ZENLLC/ai-pioneer-program-modeled-outcomes",
+  "sourceDocumentSha256": "a4676d031a3e5bb1a4ef692d24f6609629daed4dc9ead01f8ca2a0d76e3ceafb",
+  "packedGzipSha256": "855c52a2a49e6676de77778417ff5ed0e2a5dba4075dd35a22ec10350905bd9b",
+  "unpackedSha256": "d6d8ae1d4f6fd5626800a038cfdded4c3eeef9f821476e369389209dc1325ebb",
+  "rows": 34300,
+  "cohorts": [
+    2024,
+    2025,
+    2026
+  ],
+  "cohortCounts": {
+    "2024": 6200,
+    "2025": 11300,
+    "2026": 16800
+  },
+  "generator": "NumPy PCG64",
+  "seed": 20270101,
+  "releasedAt": null,
+  "sealedCohort": 2027,
+  "sealedUntil": "2027-03-30T04:00:00.000Z",
+  "disclosure": "Every record is synthetic. No figure is an observed program result. No record describes a real child, site, facilitator or app.",
+  "limitations": [
+    "Cohort improvement is a model assumption, not an observed finding.",
+    "Pre/post assessment gains are descriptive and have no comparison group.",
+    "App audience reach sums per-app users and is not deduplicated across apps.",
+    "Synthetic site codes must not be mapped to real clubs or addresses.",
+    "The 2027 cohort and 2026 retention into 2027 are unavailable in this embedded source."
+  ]
+}

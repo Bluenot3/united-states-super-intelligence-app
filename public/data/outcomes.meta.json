@@ -1,0 +1,1311 @@
+{
+  "n": 34300,
+  "layout": [
+    [
+      "cohort",
+      "u8",
+      0
+    ],
+    [
+      "eday",
+      "u8",
+      34300
+    ],
+    [
+      "age",
+      "u8",
+      68600
+    ],
+    [
+      "gender",
+      "u8",
+      102900
+    ],
+    [
+      "race",
+      "u8",
+      137200
+    ],
+    [
+      "frl",
+      "u8",
+      171500
+    ],
+    [
+      "locale",
+      "u8",
+      205800
+    ],
+    [
+      "bb",
+      "u8",
+      240100
+    ],
+    [
+      "state",
+      "u8",
+      274400
+    ],
+    [
+      "network",
+      "u8",
+      308700
+    ],
+    [
+      "delivery",
+      "u8",
+      343000
+    ],
+    [
+      "track",
+      "u8",
+      377300
+    ],
+    [
+      "stage",
+      "u8",
+      411600
+    ],
+    [
+      "app",
+      "u8",
+      445900
+    ],
+    [
+      "host",
+      "u8",
+      480200
+    ],
+    [
+      "live90",
+      "u8",
+      514500
+    ],
+    [
+      "portfolio",
+      "u8",
+      548800
+    ],
+    [
+      "retained",
+      "u8",
+      583100
+    ],
+    [
+      "badge",
+      "u8",
+      617400
+    ],
+    [
+      "anchor",
+      "u8",
+      651700
+    ],
+    [
+      "site",
+      "u8",
+      686000
+    ],
+    [
+      "att",
+      "u8",
+      720300
+    ],
+    [
+      "days",
+      "u8",
+      754600
+    ],
+    [
+      "deploys",
+      "u8",
+      788900
+    ],
+    [
+      "fac",
+      "u16",
+      823200
+    ],
+    [
+      "uptime",
+      "u16",
+      891800
+    ],
+    [
+      "users",
+      "u16",
+      960400
+    ],
+    [
+      "mentor",
+      "u16",
+      1029000
+    ],
+    [
+      "pre_Found",
+      "u16",
+      1097600
+    ],
+    [
+      "post_Found",
+      "u16",
+      1166200
+    ],
+    [
+      "pre_Prompt",
+      "u16",
+      1234800
+    ],
+    [
+      "post_Prompt",
+      "u16",
+      1303400
+    ],
+    [
+      "pre_DeployOps",
+      "u16",
+      1372000
+    ],
+    [
+      "post_DeployOps",
+      "u16",
+      1440600
+    ],
+    [
+      "pre_DataPriv",
+      "u16",
+      1509200
+    ],
+    [
+      "post_DataPriv",
+      "u16",
+      1577800
+    ],
+    [
+      "pre_Ethics",
+      "u16",
+      1646400
+    ],
+    [
+      "post_Ethics",
+      "u16",
+      1715000
+    ],
+    [
+      "pre_total",
+      "u16",
+      1783600
+    ],
+    [
+      "post_total",
+      "u16",
+      1852200
+    ]
+  ],
+  "dict": {
+    "cohort": [
+      2024,
+      2025,
+      2026,
+      2027
+    ],
+    "gender": [
+      "Female",
+      "Male",
+      "Non-binary / self-describe",
+      "Not reported"
+    ],
+    "race": [
+      "Black or African American",
+      "Hispanic or Latino",
+      "White",
+      "Asian",
+      "Two or more races",
+      "American Indian or Alaska Native",
+      "Native Hawaiian or Pacific Islander",
+      "Not reported"
+    ],
+    "locale": [
+      "Urban",
+      "Suburban",
+      "Rural"
+    ],
+    "network": [
+      "Boys & Girls Clubs",
+      "YMCA",
+      "Big Brothers Big Sisters",
+      "School District Partner",
+      "Public Library System"
+    ],
+    "delivery": [
+      "In-person",
+      "Hybrid",
+      "Virtual"
+    ],
+    "track": [
+      "Agent Builder",
+      "Data & Dashboards",
+      "Creative Studio",
+      "Civic Tech"
+    ],
+    "hosting": [
+      "ZEN Arsenal (managed)",
+      "Vercel + Supabase",
+      "Netlify + Serverless",
+      "Cloudflare Pages + Workers",
+      "Replit Deployments"
+    ],
+    "region": [
+      "South",
+      "Northeast",
+      "Midwest",
+      "West"
+    ],
+    "app": [
+      "Homework / Study Assistant",
+      "Customer-Service Agent",
+      "Research Summarizer Agent",
+      "Scheduling & Reminder Agent",
+      "Language Practice Tutor",
+      "Neighborhood Data Dashboard",
+      "Sports & Fitness Tracker",
+      "Storytelling & Comics App",
+      "School Performance Explorer",
+      "Image / Design Generator",
+      "Budget / Money Tool",
+      "Short-Form Video Assistant",
+      "Music & Audio Tool",
+      "Community Resource Finder",
+      "Safety & Wellness Info App",
+      "Local Government Explainer",
+      "Accessibility Tool"
+    ],
+    "state": [
+      "AL",
+      "AR",
+      "AZ",
+      "CA",
+      "CO",
+      "CT",
+      "DC",
+      "DE",
+      "FL",
+      "GA",
+      "IA",
+      "ID",
+      "IL",
+      "IN",
+      "KS",
+      "KY",
+      "LA",
+      "MA",
+      "MD",
+      "MI",
+      "MN",
+      "MO",
+      "MS",
+      "NC",
+      "NE",
+      "NJ",
+      "NM",
+      "NV",
+      "NY",
+      "OH",
+      "OK",
+      "OR",
+      "PA",
+      "SC",
+      "TN",
+      "TX",
+      "UT",
+      "VA",
+      "WA",
+      "WI"
+    ]
+  },
+  "sites": [
+    [
+      "BBBS-AL-141",
+      "AL",
+      "Big Brothers Big Sisters",
+      2026
+    ],
+    [
+      "BBBS-DC-051",
+      "DC",
+      "Big Brothers Big Sisters",
+      2024
+    ],
+    [
+      "BBBS-DC-074",
+      "DC",
+      "Big Brothers Big Sisters",
+      2025
+    ],
+    [
+      "BBBS-DE-140",
+      "DE",
+      "Big Brothers Big Sisters",
+      2026
+    ],
+    [
+      "BBBS-KS-153",
+      "KS",
+      "Big Brothers Big Sisters",
+      2026
+    ],
+    [
+      "BBBS-MD-159",
+      "MD",
+      "Big Brothers Big Sisters",
+      2026
+    ],
+    [
+      "BBBS-MD-162",
+      "MD",
+      "Big Brothers Big Sisters",
+      2026
+    ],
+    [
+      "BBBS-NJ-103",
+      "NJ",
+      "Big Brothers Big Sisters",
+      2025
+    ],
+    [
+      "BBBS-NY-084",
+      "NY",
+      "Big Brothers Big Sisters",
+      2025
+    ],
+    [
+      "BBBS-NY-145",
+      "NY",
+      "Big Brothers Big Sisters",
+      2026
+    ],
+    [
+      "BBBS-VA-150",
+      "VA",
+      "Big Brothers Big Sisters",
+      2026
+    ],
+    [
+      "BGC-AL-015",
+      "AL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-AL-029",
+      "AL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-AL-034",
+      "AL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-AL-037",
+      "AL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-AL-044",
+      "AL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-AR-108",
+      "AR",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-AR-161",
+      "AR",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-AZ-066",
+      "AZ",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-AZ-147",
+      "AZ",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-CA-004",
+      "CA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-CA-027",
+      "CA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-CA-039",
+      "CA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-CA-142",
+      "CA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-CO-064",
+      "CO",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-CT-071",
+      "CT",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-DC-002",
+      "DC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-DC-036",
+      "DC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-DC-045",
+      "DC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-DC-049",
+      "DC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-DC-050",
+      "DC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-DC-052",
+      "DC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-DC-078",
+      "DC",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-DC-082",
+      "DC",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-DC-122",
+      "DC",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-DC-123",
+      "DC",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-DC-125",
+      "DC",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-DC-137",
+      "DC",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-DC-146",
+      "DC",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-DE-113",
+      "DE",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-FL-026",
+      "FL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-FL-058",
+      "FL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-GA-012",
+      "GA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-GA-025",
+      "GA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-GA-099",
+      "GA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-GA-115",
+      "GA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-GA-130",
+      "GA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-IA-106",
+      "IA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-ID-114",
+      "ID",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-IL-008",
+      "IL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-IL-046",
+      "IL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-IL-055",
+      "IL",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-IN-061",
+      "IN",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-KS-109",
+      "KS",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-KY-069",
+      "KY",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-LA-067",
+      "LA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-LA-126",
+      "LA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-MA-016",
+      "MA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MA-094",
+      "MA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MD-001",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-018",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-021",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-022",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-030",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-031",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-033",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-042",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-056",
+      "MD",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MD-073",
+      "MD",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MD-081",
+      "MD",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MD-092",
+      "MD",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MD-098",
+      "MD",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MD-102",
+      "MD",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MD-117",
+      "MD",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-MD-127",
+      "MD",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-MI-013",
+      "MI",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MI-024",
+      "MI",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MI-028",
+      "MI",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-MI-086",
+      "MI",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MI-097",
+      "MI",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MN-063",
+      "MN",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MN-118",
+      "MN",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-MN-120",
+      "MN",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-MO-062",
+      "MO",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-MO-096",
+      "MO",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-NC-011",
+      "NC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NC-017",
+      "NC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NC-019",
+      "NC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NC-047",
+      "NC",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NJ-014",
+      "NJ",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NJ-041",
+      "NJ",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NJ-152",
+      "NJ",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-NM-116",
+      "NM",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-NV-107",
+      "NV",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-NY-006",
+      "NY",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NY-020",
+      "NY",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NY-035",
+      "NY",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-NY-095",
+      "NY",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-NY-156",
+      "NY",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-OH-010",
+      "OH",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-OH-057",
+      "OH",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-OH-076",
+      "OH",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-OH-104",
+      "OH",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-OH-131",
+      "OH",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-OH-139",
+      "OH",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-OH-148",
+      "OH",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-OK-072",
+      "OK",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-OR-070",
+      "OR",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-PA-009",
+      "PA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-PA-053",
+      "PA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-PA-080",
+      "PA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-SC-068",
+      "SC",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-SC-089",
+      "SC",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-TN-060",
+      "TN",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-TN-124",
+      "TN",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-TX-005",
+      "TX",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-TX-040",
+      "TX",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-TX-048",
+      "TX",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-UT-105",
+      "UT",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-UT-143",
+      "UT",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-VA-003",
+      "VA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-VA-023",
+      "VA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-VA-032",
+      "VA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-VA-038",
+      "VA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-VA-043",
+      "VA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-VA-054",
+      "VA",
+      "Boys & Girls Clubs",
+      2024
+    ],
+    [
+      "BGC-VA-083",
+      "VA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-VA-087",
+      "VA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-VA-088",
+      "VA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-VA-100",
+      "VA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-VA-121",
+      "VA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-VA-132",
+      "VA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-VA-135",
+      "VA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-VA-155",
+      "VA",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "BGC-WA-059",
+      "WA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-WA-079",
+      "WA",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-WI-065",
+      "WI",
+      "Boys & Girls Clubs",
+      2025
+    ],
+    [
+      "BGC-WI-134",
+      "WI",
+      "Boys & Girls Clubs",
+      2026
+    ],
+    [
+      "LIB-LA-077",
+      "LA",
+      "Public Library System",
+      2025
+    ],
+    [
+      "LIB-MD-163",
+      "MD",
+      "Public Library System",
+      2026
+    ],
+    [
+      "LIB-VA-085",
+      "VA",
+      "Public Library System",
+      2025
+    ],
+    [
+      "LIB-VA-157",
+      "VA",
+      "Public Library System",
+      2026
+    ],
+    [
+      "SD-CA-128",
+      "CA",
+      "School District Partner",
+      2026
+    ],
+    [
+      "SD-LA-151",
+      "LA",
+      "School District Partner",
+      2026
+    ],
+    [
+      "SD-MI-119",
+      "MI",
+      "School District Partner",
+      2026
+    ],
+    [
+      "SD-NJ-093",
+      "NJ",
+      "School District Partner",
+      2025
+    ],
+    [
+      "SD-NJ-149",
+      "NJ",
+      "School District Partner",
+      2026
+    ],
+    [
+      "SD-NV-154",
+      "NV",
+      "School District Partner",
+      2026
+    ],
+    [
+      "SD-OH-136",
+      "OH",
+      "School District Partner",
+      2026
+    ],
+    [
+      "SD-TX-129",
+      "TX",
+      "School District Partner",
+      2026
+    ],
+    [
+      "YMCA-FL-007",
+      "FL",
+      "YMCA",
+      2024
+    ],
+    [
+      "YMCA-FL-158",
+      "FL",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-LA-138",
+      "LA",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-MS-110",
+      "MS",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-NC-160",
+      "NC",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-NE-111",
+      "NE",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-NE-133",
+      "NE",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-NM-112",
+      "NM",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-NY-075",
+      "NY",
+      "YMCA",
+      2025
+    ],
+    [
+      "YMCA-NY-090",
+      "NY",
+      "YMCA",
+      2025
+    ],
+    [
+      "YMCA-OK-101",
+      "OK",
+      "YMCA",
+      2025
+    ],
+    [
+      "YMCA-UT-144",
+      "UT",
+      "YMCA",
+      2026
+    ],
+    [
+      "YMCA-VA-091",
+      "VA",
+      "YMCA",
+      2025
+    ]
+  ],
+  "cohorts": [
+    2024,
+    2025,
+    2026
+  ]
+}
