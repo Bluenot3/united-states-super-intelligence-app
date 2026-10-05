@@ -11,3 +11,4 @@ design/concepts/
 *.tsbuildinfo
 .playwright/
 .playwright-cli/
+genesis/dist/
