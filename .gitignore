@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-zenai/
 .references/
 output/playwright/
 .env

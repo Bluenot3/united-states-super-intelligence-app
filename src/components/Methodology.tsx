@@ -1,4 +1,5 @@
 import { ArrowUpRight, ChevronDown, LockKeyhole, ShieldCheck } from 'lucide-react';
+import { publicAsset } from '../lib/publicAsset';
 
 const definitions = [
   ['Modeled enrollment date', 'September 9 of the cohort year plus the recorded enrollment-day offset, calculated in UTC.'],
@@ -72,7 +73,7 @@ export default function Methodology() {
 
       <div className="method-source-links">
         <div><span className="eyebrow">OPEN THE SOURCES</span><p>Compare the experience with the supplied explorer and inspect the USSI project.</p></div>
-        <a href="/reference/outcomes-explorer.html" target="_blank" rel="noopener noreferrer">Original outcomes explorer<ArrowUpRight size={17} aria-hidden="true" /><span className="sr-only"> (opens a new tab)</span></a>
+        <a href={publicAsset('reference/outcomes-explorer.html')} target="_blank" rel="noopener noreferrer">Original outcomes explorer<ArrowUpRight size={17} aria-hidden="true" /><span className="sr-only"> (opens a new tab)</span></a>
         <a href="https://github.com/Bluenot3/united-states-super-intelligence-app" target="_blank" rel="noopener noreferrer">USSI source repository<ArrowUpRight size={17} aria-hidden="true" /><span className="sr-only"> (opens a new tab)</span></a>
       </div>
     </section>

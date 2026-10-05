@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import type { ThemeId } from '../themes';
+import { publicAsset } from '../lib/publicAsset';
 import '../theme-studio.css';
 
 interface VisualCoreProps { theme: ThemeId; quiet?: boolean; compact?: boolean }
@@ -56,7 +57,7 @@ function RingStudy({ theme }: { theme: ThemeId }) {
 }
 
 function FoilStudy() {
-  return <div className="foil-study"><div className="foil-orbit foil-orbit-a" /><div className="foil-orbit foil-orbit-b" /><img src="/visuals/vellum-lens.png" className="foil-lens" alt="" /><img src="/visuals/vellum-foil.png" className="foil-mark" alt="" /></div>;
+  return <div className="foil-study"><div className="foil-orbit foil-orbit-a" /><div className="foil-orbit foil-orbit-b" /><img src={publicAsset('visuals/vellum-lens.png')} className="foil-lens" alt="" /><img src={publicAsset('visuals/vellum-foil.png')} className="foil-mark" alt="" /></div>;
 }
 
 function AuroraStudy() {
@@ -83,7 +84,7 @@ export function VisualCore({ theme, quiet = false, compact = false }: VisualCore
     let disposed = false;
     let instance: GraphicInstance | null = null;
     let mountedCanvas: HTMLCanvasElement | null = null;
-    const source = `/visuals/${theme === 'quicksilver' ? 'quicksilver' : theme === 'zenith' ? 'zenith' : 'meridian'}-core.js`;
+    const source = publicAsset(`visuals/${theme === 'quicksilver' ? 'quicksilver' : theme === 'zenith' ? 'zenith' : 'meridian'}-core.js`);
     loadEngine(source).then(() => {
       if (disposed || !canvasRef.current) return;
       const engine = theme === 'quicksilver' ? window.Quicksilver : theme === 'zenith' ? window.ZenithCore : window.MeridianCore;
@@ -118,14 +119,14 @@ export function VisualCore({ theme, quiet = false, compact = false }: VisualCore
 
   return (
     <div className={`visual-core visual-core--${theme}${compact ? ' is-compact' : ''}${staticMode ? ' is-quiet' : ''}`} aria-hidden="true">
-      {theme === 'observatory' && <><div className={`observatory-fallback${observatoryLoaded ? ' is-hidden' : ''}`}><RingStudy theme={theme} /></div><img className={`observatory-image${observatoryLoaded ? ' is-loaded' : ''}`} src="/visuals/observatory.png" alt="" onLoad={() => setObservatoryLoaded(true)} onError={() => setObservatoryLoaded(false)} /></>}
-      {(theme === 'meridian' || theme === 'zenith') && <img src={`/visuals/${theme}-orbit.png`} className={`core-poster${ready ? ' is-hidden' : ''}`} alt="" />}
-      {theme === 'quicksilver' && <div className={`quicksilver-poster-crop${ready ? ' is-hidden' : ''}`}><img src="/visuals/quicksilver-poster.webp" alt="" /></div>}
+      {theme === 'observatory' && <><div className={`observatory-fallback${observatoryLoaded ? ' is-hidden' : ''}`}><RingStudy theme={theme} /></div><img className={`observatory-image${observatoryLoaded ? ' is-loaded' : ''}`} src={publicAsset('visuals/observatory.png')} alt="" onLoad={() => setObservatoryLoaded(true)} onError={() => setObservatoryLoaded(false)} /></>}
+      {(theme === 'meridian' || theme === 'zenith') && <img src={publicAsset(`visuals/${theme}-orbit.png`)} className={`core-poster${ready ? ' is-hidden' : ''}`} alt="" />}
+      {theme === 'quicksilver' && <div className={`quicksilver-poster-crop${ready ? ' is-hidden' : ''}`}><img src={publicAsset('visuals/quicksilver-poster.webp')} alt="" /></div>}
       {hasWebgl && !staticMode && <canvas ref={canvasRef} className={`core-canvas${ready ? ' is-ready' : ''}`} />}
-      {theme === 'arcology' && <img className="arcology-study" src="/visuals/arcology-study.svg" alt="" />}
+      {theme === 'arcology' && <img className="arcology-study" src={publicAsset('visuals/arcology-study.svg')} alt="" />}
       {theme === 'vellum' && <FoilStudy />}
-      {(theme === 'sovereign' || theme === 'treasury') && <div className="engraved-study"><img src={`/visuals/${theme}-lathe.svg`} className="engraved-lathe" alt="" /><div className="engraved-center"><svg viewBox="0 0 100 86"><path d={MARK} fill="currentColor" fillRule="evenodd" /></svg></div><div className="engraved-ring" /></div>}
-      {theme === 'aurora' && <img className="aurora-image" src="/visuals/aurora.png" alt="" />}
+      {(theme === 'sovereign' || theme === 'treasury') && <div className="engraved-study"><img src={publicAsset(`visuals/${theme}-lathe.svg`)} className="engraved-lathe" alt="" /><div className="engraved-center"><svg viewBox="0 0 100 86"><path d={MARK} fill="currentColor" fillRule="evenodd" /></svg></div><div className="engraved-ring" /></div>}
+      {theme === 'aurora' && <img className="aurora-image" src={publicAsset('visuals/aurora.png')} alt="" />}
     </div>
   );
 }

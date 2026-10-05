@@ -8,6 +8,7 @@ import DataStrands from './DataStrands';
 import OutcomeTerrain from './OutcomeTerrain';
 import { buildOutcomeTerrain, type TerrainPair } from '../lib/outcome-terrain';
 import { createImpactExplorationExport, enrolledThrough, exploreImpact } from '../lib/impact-exploration';
+import { publicAsset } from '../lib/publicAsset';
 
 const n=(value:number)=>value.toLocaleString('en-US');
 const p=(value:number|null)=>value===null?'—':`${(value*100).toFixed(1)}%`;
@@ -47,6 +48,6 @@ export default function Impact({dataset,filters,onFiltersChange,quiet,onQuietCha
       <section className="panel timing"><div className="panel-heading"><div><h2>The first live deployment.</h2><p>Days from enrollment to first live URL.</p></div></div><div className="timing-chart">{timing.map(t=><div className="timing-column" key={t.label}><span className="timing-value">{summary.deployed?p(t.count/summary.deployed):'—'}</span><div className="timing-bar-slot"><div style={{height:`${t.count/maxTiming*100}%`}} title={`${t.label} days: ${n(t.count)} modeled deployed learners`}/></div><span>{t.label}</span></div>)}</div><div className="timing-summary"><strong>{summary.medianDaysToDeploy??'—'}<span>days</span></strong><p>Median to first deploy<br/><small>Among {n(summary.deployed)} modeled deployed learners.</small></p></div></section></div>
       <section className="panel geography"><div className="panel-heading"><div><h2>A wider circle of possibility.</h2><p>Modeled reach across jurisdictions. Select one to inspect.</p></div><span className="source-label">{summary.jurisdictions} in view</span></div><div className="jurisdiction-grid">{summary.jurisdictionRows.map(r=><button className={filters.jurisdiction===r.code?'is-selected':''} key={r.code} onClick={()=>onFiltersChange({...filters,jurisdiction:filters.jurisdiction===r.code?'all':r.code})} aria-pressed={filters.jurisdiction===r.code} aria-label={`${r.code}: ${n(r.students)} modeled learners. Filter jurisdiction.`}><span>{r.code}</span><strong>{n(r.students)}</strong><i style={{height:`${Math.max(8,r.students/Math.max(...summary.jurisdictionRows.map(j=>j.students))*65)}px`}}/></button>)}</div><p className="chart-note">Jurisdiction context keeps all jurisdictions visible under the other filters. Counts are synthetic.</p></section>
     </>}
-    <div className="impact-bottom"><p>The reference model is a design and analytical input. It does not represent verified live platform activity.</p><a className="text-button" href="/reference/outcomes-explorer.html" target="_blank" rel="noreferrer">Open the full reference explorer <ArrowUpRight size={16}/></a></div>
+    <div className="impact-bottom"><p>The reference model is a design and analytical input. It does not represent verified live platform activity.</p><a className="text-button" href={publicAsset('reference/outcomes-explorer.html')} target="_blank" rel="noreferrer">Open the full reference explorer <ArrowUpRight size={16}/></a></div>
   </div>;
 }
